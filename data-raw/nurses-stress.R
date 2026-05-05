@@ -14,3 +14,7 @@ untar(
 )
 fs::dir_tree("data-raw/", recurse = 2)
 usethis::use_git_ignore("data-raw/nurses-stress/")
+gert::git_add(".")
+gert::git_commit("Download nurses stress data and save to data-raw/")
+gert::git_push()
+r3::check_project_setup_intermediate()
