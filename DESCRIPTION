@@ -4,9 +4,11 @@ Type: Project
 Version: 0.0.1
 Encoding: UTF-8
 Imports: 
+    dplyr,
     fs,
     here,
     readr,
-    snakecase
+    snakecase,
+    stringr
 Depends: 
     tidyverse

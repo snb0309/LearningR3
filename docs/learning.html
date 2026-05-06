@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"R/functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>iyi</code> ## Importing new data ::: {.cell}</p>
+<p><code>pku</code> ## Importing new data ::: {.cell}</p>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
@@ -899,6 +899,137 @@ C:/Users/SBUT0024/Documents/LearningR3/data-raw/nurses-stress/stress/F5/F5_15955
  8 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:44  85.2
  9 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:52  83.7
 10 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:45:02  83.1
+# ℹ 57,173 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_all</span>(<span class="st">"IBI.csv.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 45,164 × 3
+   file_path_id                                        collection_datetime   ibi
+   &lt;chr&gt;                                               &lt;dttm&gt;              &lt;dbl&gt;
+ 1 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:46 0.703
+ 2 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:46:33 0.766
+ 3 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:48:34 0.727
+ 4 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:04:41 0.734
+ 5 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:04:48 0.672
+ 6 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:06:27 0.766
+ 7 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:06:28 0.766
+ 8 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:14:28 0.688
+ 9 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:15:17 0.688
+10 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 17:34:19 0.719
+# ℹ 45,154 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-inspect-and-compare-the-data-frames" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-inspect-and-compare-the-data-frames">Exercise: Inspect and compare the data frames</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>hr_data <span class="ot">&lt;-</span> <span class="fu">read_all</span>(<span class="st">"HR.csv.gz"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>survey_data <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"data-raw/nurses-stress/survey-results.csv.gz"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read</span>()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>hr_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 57,183 × 3
+   file_path_id                                        collection_datetime    hr
+   &lt;chr&gt;                                               &lt;dttm&gt;              &lt;dbl&gt;
+ 1 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:07  83.7
+ 2 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:20  78.2
+ 3 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:41  72.5
+ 4 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:43  73.2
+ 5 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:18  77.8
+ 6 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:35  83.7
+ 7 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:37  84.1
+ 8 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:44  85.2
+ 9 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:52  83.7
+10 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:45:02  83.1
+# ℹ 57,173 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>survey_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 20
+   id    start_time end_time duration date      stress_level covid_related
+   &lt;chr&gt; &lt;time&gt;     &lt;time&gt;   &lt;time&gt;   &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+ 1 5C    08:00      09:00    01:00    4/15/2020            1             0
+ 2 5C    17:31      17:58    00:27    4/14/2020            1             0
+ 3 E4    15:32      15:37    00:05    4/18/2020            2             0
+ 4 E4    14:05      14:11    00:06    4/18/2020            2             0
+ 5 7A    13:52      14:03    00:11    4/18/2020            2             0
+ 6 94    08:49      08:56    00:07    4/18/2020           NA            NA
+ 7 94    09:29      09:36    00:07    4/18/2020           NA            NA
+ 8 E4    08:15      08:24    00:09    4/18/2020            2             0
+ 9 E4    09:32      09:38    00:06    4/18/2020            2             0
+10 7A    09:13      10:13    01:00    4/19/2020            2             0
+# ℹ 90 more rows
+# ℹ 13 more variables: treating_a_covid_patient &lt;dbl&gt;, patient_in_crisis &lt;dbl&gt;,
+#   patient_or_patient_s_family &lt;dbl&gt;, doctors_or_colleagues &lt;dbl&gt;,
+#   administration_lab_pharmacy_radiology_or_other_ancilliary_services &lt;dbl&gt;,
+#   increased_workload &lt;dbl&gt;, technology_related_stress &lt;dbl&gt;,
+#   lack_of_supplies &lt;dbl&gt;, documentation &lt;dbl&gt;,
+#   competency_related_stress &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>hr_data <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">str_extract</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>      file_path_id,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">pattern =</span> <span class="st">"/stress/[:alnum:]{2}/"</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_remove</span>(<span class="st">"/stress/"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_remove</span>(<span class="st">"/"</span>),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> file_path_id</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>file_path_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 57,183 × 3
+   id    collection_datetime    hr
+   &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt;
+ 1 15    2020-07-07 16:43:07  83.7
+ 2 15    2020-07-07 16:43:20  78.2
+ 3 15    2020-07-07 16:43:41  72.5
+ 4 15    2020-07-07 16:43:43  73.2
+ 5 15    2020-07-07 16:44:18  77.8
+ 6 15    2020-07-07 16:44:35  83.7
+ 7 15    2020-07-07 16:44:37  84.1
+ 8 15    2020-07-07 16:44:44  85.2
+ 9 15    2020-07-07 16:44:52  83.7
+10 15    2020-07-07 16:45:02  83.1
+# ℹ 57,173 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-convert-get-id-code-into-a-function" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-convert-get-id-code-into-a-function">Exercise: Convert ‘get ID’ code into a function</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>get_participant_id <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  data_with_id <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">id =</span> stringr<span class="sc">::</span><span class="fu">str_extract</span>(</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>        file_path_id,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"/stress/[:alnum:]{2}/"</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"/stress/"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="st">"/"</span>),</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">.before =</span> file_path_id</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>file_path_id)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data_with_id)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="fu">get_participant_id</span>(hr_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 57,183 × 3
+   id    collection_datetime    hr
+   &lt;chr&gt; &lt;dttm&gt;              &lt;dbl&gt;
+ 1 15    2020-07-07 16:43:07  83.7
+ 2 15    2020-07-07 16:43:20  78.2
+ 3 15    2020-07-07 16:43:41  72.5
+ 4 15    2020-07-07 16:43:43  73.2
+ 5 15    2020-07-07 16:44:18  77.8
+ 6 15    2020-07-07 16:44:35  83.7
+ 7 15    2020-07-07 16:44:37  84.1
+ 8 15    2020-07-07 16:44:44  85.2
+ 9 15    2020-07-07 16:44:52  83.7
+10 15    2020-07-07 16:45:02  83.1
 # ℹ 57,173 more rows</code></pre>
 </div>
 </div>
