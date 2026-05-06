@@ -28,3 +28,12 @@ get_participant_id <- function(data) {
     dplyr::select(-file_path_id)
   return(data_with_id)
 }
+read_all <- function(filename) {
+  files <- here::here("data-raw/nurses-stress/") |>
+    fs::dir_ls(regexp = filename, recurse = TRUE)
+
+  data <- files |>
+    purrr::map(read) |>
+    purrr::list_rbind(names_to = "file_path_id")
+  return(data)
+}
