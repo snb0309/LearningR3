@@ -130,9 +130,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>here() starts at C:/Users/SBUT0024/Documents/LearningR3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fs)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"R/functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"R/functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>lqu</code> ## Importing new data ::: {.cell}</p>
+<p><code>iyi</code> ## Importing new data ::: {.cell}</p>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
@@ -852,6 +853,38 @@ C:/Users/SBUT0024/Documents/LearningR3/data-raw/nurses-stress/stress/F5/F5_15955
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>(<span class="at">names_to =</span> <span class="st">"file_path_id"</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>hr_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 57,183 × 3
+   file_path_id                                        collection_datetime    hr
+   &lt;chr&gt;                                               &lt;dttm&gt;              &lt;dbl&gt;
+ 1 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:07  83.7
+ 2 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:20  78.2
+ 3 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:41  72.5
+ 4 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:43:43  73.2
+ 5 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:18  77.8
+ 6 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:35  83.7
+ 7 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:37  84.1
+ 8 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:44  85.2
+ 9 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:44:52  83.7
+10 C:/Users/SBUT0024/Documents/LearningR3/data-raw/nu… 2020-07-07 16:45:02  83.1
+# ℹ 57,173 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-convert-map-to-function-and-use-on-sleep" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-convert-map-to-function-and-use-on-sleep">Exercise: Convert map to function and use on sleep</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>read_all <span class="ot">&lt;-</span> <span class="cf">function</span>(filename) {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  files <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data-raw/nurses-stress/"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="at">regexp =</span> filename, <span class="at">recurse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> files <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(read) <span class="sc">|&gt;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">list_rbind</span>(<span class="at">names_to =</span> <span class="st">"file_path_id"</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">read_all</span>(<span class="st">"HR.csv.gz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 57,183 × 3
    file_path_id                                        collection_datetime    hr
