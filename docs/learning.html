@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"R/functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>xox</code> ## Importing new data ::: {.cell}</p>
+<p><code>lxo</code> ## Importing new data ::: {.cell}</p>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">here</span>(<span class="st">"data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_col_types =</span> <span class="cn">FALSE</span>,</span>
@@ -1133,6 +1133,125 @@ C:/Users/SBUT0024/Documents/LearningR3/data-raw/nurses-stress/stress/F5/F5_15955
 10 15    2020-07-07 16:52:00    90.7  1.69       90.4
 # ℹ 12,775 more rows</code></pre>
 </div>
+</div>
+</section>
+<section id="exercise-convert-the-summarising-code-into-a-function" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-convert-the-summarising-code-into-a-function">Exercise: Convert the summarising code into a function</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>summarise_by_datetime <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  summarised_data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">collection_datetime =</span> lubridate<span class="sc">::</span><span class="fu">round_date</span>(</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>        collection_datetime,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">unit =</span> <span class="st">"minute"</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>        tidyselect<span class="sc">::</span><span class="fu">where</span>(is.numeric),</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">sd =</span> sd, <span class="at">median =</span> median)</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">.by =</span> <span class="fu">c</span>(id, collection_datetime)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(summarised_data)</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-start-filling-in-docscleaning.qmd" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-start-filling-in-docscleaning.qmd">Exercise: Start filling in docs/cleaning.qmd</h2>
+</section>
+<section id="see-the-cleaning-document" class="level2">
+<h2 class="anchored" data-anchor-id="see-the-cleaning-document">See the cleaning document</h2>
+</section>
+<section id="pivot-longer" class="level2">
+<h2 class="anchored" data-anchor-id="pivot-longer">Pivot longer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>survey_data <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"data-raw/nurses-stress/survey-results.csv.gz"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read</span>()</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>survey_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 20
+   id    start_time end_time duration date      stress_level covid_related
+   &lt;chr&gt; &lt;time&gt;     &lt;time&gt;   &lt;time&gt;   &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+ 1 5C    08:00      09:00    01:00    4/15/2020            1             0
+ 2 5C    17:31      17:58    00:27    4/14/2020            1             0
+ 3 E4    15:32      15:37    00:05    4/18/2020            2             0
+ 4 E4    14:05      14:11    00:06    4/18/2020            2             0
+ 5 7A    13:52      14:03    00:11    4/18/2020            2             0
+ 6 94    08:49      08:56    00:07    4/18/2020           NA            NA
+ 7 94    09:29      09:36    00:07    4/18/2020           NA            NA
+ 8 E4    08:15      08:24    00:09    4/18/2020            2             0
+ 9 E4    09:32      09:38    00:06    4/18/2020            2             0
+10 7A    09:13      10:13    01:00    4/19/2020            2             0
+# ℹ 90 more rows
+# ℹ 13 more variables: treating_a_covid_patient &lt;dbl&gt;, patient_in_crisis &lt;dbl&gt;,
+#   patient_or_patient_s_family &lt;dbl&gt;, doctors_or_colleagues &lt;dbl&gt;,
+#   administration_lab_pharmacy_radiology_or_other_ancilliary_services &lt;dbl&gt;,
+#   increased_workload &lt;dbl&gt;, technology_related_stress &lt;dbl&gt;,
+#   lack_of_supplies &lt;dbl&gt;, documentation &lt;dbl&gt;,
+#   competency_related_stress &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>survey_tidy <span class="ot">&lt;-</span> survey_data <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">date =</span> <span class="fu">mdy</span>(date),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_datetime =</span> <span class="fu">as_datetime</span>(<span class="fu">paste</span>(date, start_time)),</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_datetime =</span> <span class="fu">as_datetime</span>(<span class="fu">paste</span>(date, end_time)),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">datetime_id =</span> start_datetime,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> start_time</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(date, start_time, end_time, duration))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>survey_tidy <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, datetime_id, start_datetime, end_datetime) <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(start_datetime, end_datetime), <span class="at">names_to =</span> <span class="cn">NULL</span>, <span class="at">values_to =</span> <span class="st">"collection_datetime"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="fu">pick</span>(<span class="sc">-</span>collection_datetime)) <span class="sc">|&gt;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(<span class="at">collection_datetime =</span> <span class="fu">seq</span>(<span class="fu">min</span>(collection_datetime),</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">max</span>(collection_datetime),</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="dv">60</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,047 × 3
+   id    datetime_id         collection_datetime
+   &lt;chr&gt; &lt;dttm&gt;              &lt;dttm&gt;             
+ 1 5C    2020-04-14 17:31:00 2020-04-14 17:31:00
+ 2 5C    2020-04-14 17:31:00 2020-04-14 17:32:00
+ 3 5C    2020-04-14 17:31:00 2020-04-14 17:33:00
+ 4 5C    2020-04-14 17:31:00 2020-04-14 17:34:00
+ 5 5C    2020-04-14 17:31:00 2020-04-14 17:35:00
+ 6 5C    2020-04-14 17:31:00 2020-04-14 17:36:00
+ 7 5C    2020-04-14 17:31:00 2020-04-14 17:37:00
+ 8 5C    2020-04-14 17:31:00 2020-04-14 17:38:00
+ 9 5C    2020-04-14 17:31:00 2020-04-14 17:39:00
+10 5C    2020-04-14 17:31:00 2020-04-14 17:40:00
+# ℹ 3,037 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-convert-into-two-new-functions" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-convert-into-two-new-functions">Exercise: Convert into two new functions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Tidy up the dates in the survey results</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data A data frame of the survey results data</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return A data frame</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>tidy_survey_dates <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  tidied <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(date),</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">start_datetime =</span> lubridate<span class="sc">::</span><span class="fu">as_datetime</span>(<span class="fu">paste</span>(date, start_time)),</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">end_datetime =</span> lubridate<span class="sc">::</span><span class="fu">as_datetime</span>(<span class="fu">paste</span>(date, end_time)),</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">datetime_id =</span> start_datetime,</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">.before =</span> start_time</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(date, start_time, end_time, duration))</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tidied)</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
